@@ -1,22 +1,22 @@
-Yet another bash script to automate WordPress installation for FreeBSD.
+Še ena bash skripta namenjena avtomatizaciji WordPress namestitve za FreeBSD.
 
-Script was tested on the following FreeBSD releases: 12.1, 12.2. Please let me know if you tried any other release and it worked.
+Skripta je testirana na naslednjih različicah: 12.1, 12.2. Razvijalec prosi za povratne informacije, če vam je uspelo na drugih različicah.
 
-### This script will automatically install a fresh copy of WordPress along with all it's dependencies (PHP7.4/Apache24/MariaDB10.3) onto your FreeBSD Box. Works on Jails, VMs and bare metal installs.
-> Apache and MariaDB will listen on the default ports, so if you are binding your Jails/VMs to the same IP as your host, manually edit the config files to fit your environment.
+### Ta skripta bo avtomatično namestila svežo kopijo WordPress, skupaj z vsemi predzahtevami (PHP7.4/Apache24/MariaDB10.3) za vaš FreeBSD box. Deluje v ječah (Jails), virtualnih sistemih (VMs) in namestitvah na fizične strežnike.
+> Apache in MariaDB poslušata na privzetih vratih (default ports), tako da če preusmerjate vrata v vaši ječi/VMs na ista vrata na katerih posluša gostitelj, je potrebna ročna nastavitev konfiguracije, da bo ustrezala vašemu okolju.
 
-#### First, run this command to install the required software, and make *bash* a default shell.
+#### Prvi korak je, da poženete naslednji ukaz, ki bo namestil potrebne pakete in nastavil "bash" za vašo privzeto ukazno lupino.
 ```
 pkg update -f && pkg install -y bash curl && chsh -s bash root
 ```
 
-#### Then logout for the changes to apply, log back in and run this oneliner. Run the script as root, *sudo* is not supported at the moment.
+#### Naslednji potrebni korak je, da se odjavite in ponovno prijavite v sistem, da se podosobi ukazna lupina v "bash", nato poženemo naslednjo vrstico. Prijavljeni morate biti kot root uporabnik, *sudo* v tej različici ni podprt.
 For FreeBSD 12:<br>
 ```
 curl -s https://raw.githubusercontent.com/yaroslav-gwit/freebsd-wordpress-autoinstaller/main/wordpress-installation-freebsd12.sh | bash -
 ```
 
-#### Couple of notes:
+#### Nekaj opomb:
 - All WordPress files are here: <code>/usr/local/www/apache24/data/</code>
 - Apache2 config file is here: <code>/usr/local/etc/apache24/httpd.conf</code>
 > There is also <code>/usr/local/etc/apache24/httpd.conf.BACKUP</code>, in case you'd like to check the defaults, add more modules, etc.
