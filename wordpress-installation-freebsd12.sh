@@ -49,7 +49,7 @@ pkg install -y nano htop bmon iftop pwgen sudo figlet tmux &> /dev/null
 printf "."
 
 ## Set the correct banner ##
-FreeBSD Opensource Software > /etc/motd
+figlet FreeBSD Opensource Software > /etc/motd
 service motd restart &> /dev/null
 
 ## Na dan 26. feb. 2022, je najnovejša verzija MariaDB 10.5, zato je tu v uporabi. ##
