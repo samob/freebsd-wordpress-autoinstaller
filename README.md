@@ -13,7 +13,7 @@ pkg update -f && pkg install -y bash curl && chsh -s bash root
 #### Naslednji potrebni korak je, da se odjavite in ponovno prijavite v sistem, da se podosobi ukazna lupina v "bash", nato poženemo naslednjo vrstico. Prijavljeni morate biti kot root uporabnik, *sudo* v tej različici ni podprt.
 For FreeBSD 12:<br>
 ```
-curl -s https://raw.githubusercontent.com/yaroslav-gwit/freebsd-wordpress-autoinstaller/main/wordpress-installation-freebsd12.sh | bash -
+curl -s https://raw.githubusercontent.com/samob/freebsd-wordpress-autoinstaller/main/wordpress-installation-freebsd12.sh | bash -
 ```
 
 #### Nekaj opomb:
