@@ -2,7 +2,7 @@
 
 printf "\n"
 
-## Set the colors ##
+## Barvna nastavitev ##
 NC='\033[0m'
 BLACK='\033[0;30m'
 RED='\033[0;31m'
@@ -22,38 +22,38 @@ LIGHTCYAN='\033[1;36m'
 WHITE='\033[1;37m'
 
 if [[ $USER = root ]]; then
-    printf "You ${GREEN}passed the root user check${NC}, all good.\n"
+    printf "Preverjanje ${GREEN}ali ste root uporabnik check${NC}, vse je v redu.\n"
 else
-    printf "You are not root!!! Log in as root, please.\n"
+    printf "Niste prijavljeni kot root uporabnik! Za nadaljevanje se prijavite kot root (sudo trenutno ni podprt).\n"
     exit
 fi
 
 if [[ ${SHELL} = $(which bash) ]] || [[ ${SHELL} = /usr/local/bin/bash ]] || [[ ${SHELL} = /bin/bash ]]; then
-	printf "bash is a sane choise of shell, ${GREEN}proceeding with the install${NC}.\n"
+	printf "bash je zaznani shell, ${GREEN}namestitev je v teku install${NC}.\n"
 
 else
-    printf "This is not bash! Installing and setting bash as your default shell, re-login and start the script again.\n"
+    printf "Vaš vmesnik ni bash! Namestite in nastavite bash kot vašo privzeto root lupino. Po zamenjavi se je potrebno ponovno prijaviti v sistem.\n"
     pkg install -y bash &> /dev/null
     chsh -s bash root
     exit
 fi
 
 printf "\n"
-printf "Installing and configuring software: "
+printf "Nameščanje in konfiguracija zahtevanih programskih paketov: "
 
 ## Install the software required for basic jail stuff ##
 pkg update -fq &> /dev/null
 pkg upgrade -y &> /dev/null
-pkg install -y nano htop bmon iftop pwgen sudo figlet &> /dev/null
+pkg install -y nano htop bmon iftop pwgen sudo figlet tmux &> /dev/null
 
 printf "."
 
 ## Set the correct banner ##
-figlet GATEWAY - IT > /etc/motd
+FreeBSD Opensource Software > /etc/motd
 service motd restart &> /dev/null
 
-## Up to 12 Oct 2020 the newest version of working MariaDB of FreeBSD was 10.3, that's why it is used here. ##
-pkg install -y apache24 mariadb103-server mariadb103-client &> /dev/null
+## Na dan 26. feb. 2022, je najnovejša verzija MariaDB 10.5, zato je tu v uporabi. ##
+pkg install -y apache24 mariadb105-server mariadb105-client &> /dev/null
 
 printf "."
 
@@ -128,7 +128,7 @@ printf "."
 ## Make a selfsigned SSL cert
 mkdir -p /usr/local/www/apache24/ssl/
 
-openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /usr/local/www/apache24/ssl/self.key -out /usr/local/www/apache24/ssl/self.crt -subj "/C=GB/ST=London/L=London/O=Global Security/OU=Gateway-IT Department/CN=gateway-it.intranet" &> /dev/null
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /usr/local/www/apache24/ssl/self.key -out /usr/local/www/apache24/ssl/self.crt -subj "/C=GB/ST=Ljubljana/L=Ljubljana/O=Open Source/OU=Gateway-IT Department/CN=gateway-it.intranet" &> /dev/null
 
 chown www:www /usr/local/www/apache24/ssl/self.key
 chown www:www /usr/local/www/apache24/ssl/self.crt
@@ -136,7 +136,7 @@ chown www:www /usr/local/www/apache24/ssl/self.crt
 printf ". "
 
 printf "${GREEN}Done${NC}\n"
-printf "Downloading WordPress, WP-CLI and populating default config files: "
+printf "Prenašam WordPress, WP-CLI in nameščam potrebne datoteke: "
 
 ## Download and install wp-cli ##
 cd /root/
@@ -511,7 +511,7 @@ chown -R www /home/www
 pw usermod www -d /home/www
 #sed -i '' "/World Wide Web Owner/s/\/nonexistent/\/home\/www/" /etc/master.passwd
 
-sudo -u www wp core install --url=127.0.0.1 --title="GWIT Hosted Wordpress Site" --admin_user=$WP_CLI_USERNAME --admin_password=$WP_CLI_USER_PASSWORD --admin_email=${WP_CLI_USER_EMAIL} &> /dev/null
+sudo -u www wp core install --url=127.0.0.1 --title="Wordpress teče na FreeBSD" --admin_user=$WP_CLI_USERNAME --admin_password=$WP_CLI_USER_PASSWORD --admin_email=${WP_CLI_USER_EMAIL} &> /dev/null
 sudo -u www wp rewrite structure '/%postname%/' --hard &> /dev/null
 sudo -u www wp plugin delete akismet hello &> /dev/null
 sudo -u www wp site empty --yes &> /dev/null
@@ -520,7 +520,7 @@ sudo -u www wp theme delete twentyseventeen twentynineteen twentytwenty &> /dev/
 printf " ..... ${GREEN}Done${NC}\n"
 
 ## Note with all credentials for later use ##
-printf "Writing down all passwords to ${GREEN}wordpress-creds.txt${NC}: "
+printf "Vsa gesla za nadzor so shranjena v ${GREEN}wordpress-creds.txt${NC}: "
 
 echo "## Wordpress Web GUI username and password ##" >> /root/wordpress-creds.txt
 echo "WP_GUI_USERNAME" - $WP_CLI_USERNAME >> /root/wordpress-creds.txt
