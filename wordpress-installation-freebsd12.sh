@@ -29,7 +29,7 @@ else
 fi
 
 if [[ ${SHELL} = $(which bash) ]] || [[ ${SHELL} = /usr/local/bin/bash ]] || [[ ${SHELL} = /bin/bash ]]; then
-	printf "bash je zaznani shell, ${GREEN}namestitev je v teku install${NC}.\n"
+	printf "bash je zaznani shell, ${GREEN}namestitev je v teku${NC}.\n"
 
 else
     printf "Vaš vmesnik ni bash! Namestite in nastavite bash kot vašo privzeto root lupino. Po zamenjavi se je potrebno ponovno prijaviti v sistem.\n"
@@ -257,7 +257,7 @@ LogLevel warn
     RemoteIPHeader X-Forwarded-For
     RemoteIPInternalProxy 10.0.0.0/8
     RemoteIPInternalProxy 172.16.0.0/12
-    RemoteIPInternalProxy 192.168.0.0/16
+    RemoteIPInternalProxy 192.168.1.0/16
 </IfModule>
 
 <IfModule mime_module>
